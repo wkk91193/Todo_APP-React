@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import{ Provider } from 'mobx-react';
+import TaskStore from './stores/TaskStore'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+
+const Root =(
+    <Provider TaskStore={TaskStore}>
+      <App/>
+    </Provider>
+)
+ReactDOM.render(Root,
   document.getElementById('root')
 );
 
