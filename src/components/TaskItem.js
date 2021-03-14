@@ -10,12 +10,12 @@ const TaskItem = inject('TaskStore')(observer(props => {
     <div>
       <div key={props.task.id} className="todo-item">
         <div className="todo-item-left">
-          <input type="checkbox" onChange={(event) => TaskStore.checkTodo(props.task, event)} checked={props.task.completed} />
+          <input type="checkbox" onChange={(event) => TaskStore.checkTask(props.task, event)} checked={props.task.completed} />
 
           {!props.task.editing &&
           <div
             className={classnames({'todo-item-label': true, 'completed': props.task.completed})}
-            onDoubleClick={(event) => TaskStore.editTodo(props.task, event)}
+            onDoubleClick={(event) => TaskStore.editTask(props.task, event)}
           >
             {props.task.title}
           </div>
@@ -37,7 +37,7 @@ const TaskItem = inject('TaskStore')(observer(props => {
           }
 
         </div>
-        <div className="remove-item" onClick={(event) => TaskStore.deleteTodo(props.task.id)}>
+        <div className="remove-item" onClick={(event) => TaskStore.deleteTask(props.task.id)}>
           &times;
         </div>
       </div>

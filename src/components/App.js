@@ -13,6 +13,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 @observer
 class App extends Component {
   render() {
+    console.warn = () => {}
     const TaskStore = this.props.TaskStore;
 
     return (
@@ -21,14 +22,14 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className="Todo-container">
-          <input type="text" className="todo-input" placeholder="What needs to be done" ref={TaskStore.todoInput} onKeyUp={TaskStore.addTodo} />
+          <input type="text" className="todo-input" placeholder="What needs to be done" ref={TaskStore.taskInput} onKeyUp={TaskStore.addTask} />
 
           <ReactCSSTransitionGroup
             transitionName="fade"
             transitionEnterTimeout={300}
             transitionLeaveTimeout={300}
           >
-          {TaskStore.todosFiltered.map(task =>
+          {TaskStore.tasksFiltered.map(task =>
             <TaskItem key={task.id} task={task} />
           )}
           </ReactCSSTransitionGroup>
@@ -46,7 +47,7 @@ class App extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
             >
-            {TodoStore.todosCompletedCount > 0 &&
+            {TaskStore.tasksCompletedCount > 0 &&
               <TasksClearCompleted />
             }
             </ReactCSSTransitionGroup>
@@ -59,7 +60,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.TaskStore.retrieveTodos();
+    this.props.TaskStore.retrieveTasks();
   }
 }
 

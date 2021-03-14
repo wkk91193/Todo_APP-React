@@ -2,7 +2,7 @@ import React from 'react';
 import { observable, action, computed, configure, runInAction } from 'mobx';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080/api';
-configure({enforceActions: true});
+configure({enforceActions: "observed"});
 
 class TaskStore {
   @observable tasks = [];
@@ -127,7 +127,7 @@ class TaskStore {
     this.tasks.splice(index, 1, task);
   }
 
-  @action checkAllTodos = (event) => {
+  @action checkAllTasks = (event) => {
     this.tasks.forEach(task => task.completed = event.target.checked);
     event.persist();
 
@@ -152,8 +152,8 @@ class TaskStore {
   @action clearCompleted = () => {
 
     const completed = this.tasks
-      .filter(todo => todo.completed)
-      .map(todo => todo.id);
+      .filter(task => task.completed)
+      .map(task => task.id);
 
     axios.delete('/todosDeleteCompleted', {
       data: {
@@ -162,7 +162,7 @@ class TaskStore {
     })
       .then(response => {
         runInAction(() => {
-          this.tasks = this.tasks.filter(todo => !todo.completed);
+          this.tasks = this.tasks.filter(task => !task.completed);
         });
       })
       .catch(error => {
@@ -170,24 +170,24 @@ class TaskStore {
       });
   }
 
-  @computed get todosCompletedCount() {
-    return this.tasks.filter(todo => todo.completed).length;
+  @computed get tasksCompletedCount() {
+    return this.tasks.filter(task => task.completed).length;
   }
 
-  @computed get todosFiltered() {
+  @computed get tasksFiltered() {
     if (this.filter === 'all') {
       return this.tasks;
     } else if (this.filter === 'active') {
-      return this.tasks.filter(todo => !todo.completed);
+      return this.tasks.filter(task => !task.completed);
     } else if (this.filter === 'completed') {
-      return this.tasks.filter(todo => todo.completed);
+      return this.tasks.filter(task => task.completed);
     }
 
     return this.tasks;
   }
 
   @computed get remaining() {
-    return this.tasks.filter(todo => !todo.completed).length;
+    return this.tasks.filter(task => !task.completed).length;
   }
 
   @computed get anyRemaining() {
