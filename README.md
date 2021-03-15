@@ -7,8 +7,7 @@
 4. The main page of the application will list the existing TODO items on startup
 
 # Getting Started with ToDo
-0. Make sure the https://github.com/wkk91193/Todo_API-Node is running
-1. cd into todo-app
-2. Run npm install
+0. Make sure the backend https://github.com/wkk91193/Todo_API-Node is running
+1. Run npm install
 3. Run npm start
 
